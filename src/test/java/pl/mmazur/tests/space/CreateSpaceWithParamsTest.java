@@ -1,4 +1,4 @@
-package pl.mmazur.tests;
+package pl.mmazur.tests.space;
 
 import org.assertj.core.api.Assertions;
 import org.json.JSONObject;
