@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.mmazur.dto.CreateTaskRequestDto;
 import pl.mmazur.requests.list.CreateListRequest;
 import pl.mmazur.requests.space.CreateSpaceRequest;
 import pl.mmazur.requests.task.CreateTaskRequest;
@@ -59,18 +60,22 @@ public class UpdateTaskE2ETest {
     }
 
     private String createTaskStep() {
-        JSONObject task = new JSONObject();
-        task.put("name", taskName);
-        task.put("description", "Jak to działa?");
-        task.put("status", "to do");
-        task.put("status", JSONObject.NULL);
-        task.put("priority", JSONObject.NULL);
-        task.put("parent", JSONObject.NULL);
-        task.put("time_estimate", JSONObject.NULL);
-        task.put("assignees", JSONObject.NULL);
-        task.put("archived", false);
+//        JSONObject task = new JSONObject(); --> STARA WERSJA Z JSONEM
+//        task.put("name", taskName);
+//        task.put("description", "Jak to działa?");
+//        task.put("status", "to do");
+//        task.put("priority", JSONObject.NULL);
+//        task.put("parent", JSONObject.NULL);
+//        task.put("time_estimate", JSONObject.NULL);
+//        task.put("assignees", JSONObject.NULL);
+//        task.put("archived", false);
 
-        final var response = CreateTaskRequest.createTask(task, listId);
+        CreateTaskRequestDto taskDto = new CreateTaskRequestDto(); // --> NOWA WERSJA Z DTO (Data Transfer Object)
+        taskDto.setName(taskName);
+        taskDto.setDescription("Jak to działa?");
+        taskDto.setStatus("to do");
+
+        final var response = CreateTaskRequest.createTask(taskDto, listId); //przekazanie dto do requesta i zamiana dto na jsona w requestcie to serializacja
         Assertions.assertThat(response.statusCode()).isEqualTo(200);
 
         JsonPath jsonData = response.jsonPath();
