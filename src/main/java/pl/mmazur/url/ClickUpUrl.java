@@ -1,5 +1,9 @@
 package pl.mmazur.url;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE) //-wygenerowanie bezargumentowego prywatnego konstruktora, żeby nie można było utworzyć instancji tej klasy. Generowanie za pomocą Lomboka
 public class ClickUpUrl {
     private static final String BASE_URL = "https://api.clickup.com/api/v2";
     private static final String TEAM = "/team";
