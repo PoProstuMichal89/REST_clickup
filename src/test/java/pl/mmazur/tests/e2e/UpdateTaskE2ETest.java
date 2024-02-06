@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.mmazur.dto.CreateTaskRequestDto;
+import pl.mmazur.dto.request.CreateTaskRequestDto;
 import pl.mmazur.requests.list.CreateListRequest;
 import pl.mmazur.requests.space.CreateSpaceRequest;
 import pl.mmazur.requests.task.CreateTaskRequest;
@@ -76,13 +76,12 @@ public class UpdateTaskE2ETest {
         taskDto.setStatus("to do");
 
         final var response = CreateTaskRequest.createTask(taskDto, listId); //przekazanie dto do requesta i zamiana dto na jsona w requestcie to serializacja
-        Assertions.assertThat(response.statusCode()).isEqualTo(200);
+//        LOGGER.info("Create task Response: {}", response);
 
-        JsonPath jsonData = response.jsonPath();
-        Assertions.assertThat(jsonData.getString("name")).isEqualTo(taskName);
-        Assertions.assertThat(jsonData.getString("description")).isEqualTo("Jak to działa?");
+        Assertions.assertThat(response.getName()).isEqualTo(taskName);
+        Assertions.assertThat(response.getDescription()).isEqualTo("Jak to działa?");
 
-        return jsonData.getString("id");
+        return response.getId();
 
     }
 

@@ -1,4 +1,4 @@
-package pl.mmazur.dto;
+package pl.mmazur.dto.request;
 
 public class CreateTaskRequestDto {
     private String name;

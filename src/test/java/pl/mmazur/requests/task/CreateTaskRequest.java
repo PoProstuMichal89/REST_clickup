@@ -2,8 +2,8 @@ package pl.mmazur.requests.task;
 
 import io.restassured.response.Response;
 import org.json.JSONObject;
-import pl.mmazur.dto.CreateTaskRequestDto;
-import pl.mmazur.properites.ClickUpProperites;
+import pl.mmazur.dto.request.CreateTaskRequestDto;
+import pl.mmazur.dto.response.CreateTaskResponseDto;
 import pl.mmazur.requests.BaseRequest;
 import pl.mmazur.url.ClickUpUrl;
 
@@ -21,18 +21,21 @@ public class CreateTaskRequest {
                 .extract()
                 .response();
 
+
     }
 
-    public static Response createTask(CreateTaskRequestDto taskDto, String listId) {
+    public static CreateTaskResponseDto createTask(CreateTaskRequestDto taskDto, String listId) {
         return given()
                 .spec(BaseRequest.requestSpecWithLogs())
                 .body(taskDto) //dla DTO nie trzeba robić toString
                 .when()
                 .post(ClickUpUrl.getTasksUrl(listId))
                 .then()
+                .statusCode(200)
                 .log().ifError()
                 .extract()
-                .response();
+                .response()
+                .as(CreateTaskResponseDto.class); //as - konwersja na obiekt (DTO) --> to jest deserializacja (nie chcemy całego responsa tylko obket javowy, który zawiera tylko to co nas interesuje<określone pola z jsona>)
 
     }
 }
