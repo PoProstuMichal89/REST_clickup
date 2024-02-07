@@ -42,4 +42,7 @@ public class ClickUpUrl {
     public static String getTasksUrl(String listId) {
         return getListUrl(listId) + TASK;
     }
+    public static String getTaskUrl(String taskId) {
+        return TASK + "/" + taskId;
+    }
 }

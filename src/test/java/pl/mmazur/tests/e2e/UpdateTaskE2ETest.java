@@ -9,9 +9,11 @@ import org.slf4j.LoggerFactory;
 import pl.mmazur.dto.request.CreateTaskRequestDto;
 import pl.mmazur.requests.list.CreateListRequest;
 import pl.mmazur.requests.space.CreateSpaceRequest;
+import pl.mmazur.requests.space.DeleteSpaceRequest;
 import pl.mmazur.requests.task.CreateTaskRequest;
+import pl.mmazur.requests.task.UpdateTaskRequest;
 
-public class UpdateTaskE2ETest {
+class UpdateTaskE2ETest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UpdateTaskE2ETest.class);
     private static String spaceName = "SPACE E2E";
@@ -31,6 +33,12 @@ public class UpdateTaskE2ETest {
 
         taskId = createTaskStep();
         LOGGER.info("Task id: {} ", taskId);
+
+        updateTaskStep();
+
+        closeTaskStep();
+
+        deleteSpaceStep();
     }
 
     private String createSpaceStep() {
@@ -83,6 +91,37 @@ public class UpdateTaskE2ETest {
 
         return response.getId();
 
+    }
+
+    private void updateTaskStep() {
+        JSONObject updateTask = new JSONObject();
+        updateTask.put("name", "Zmienna");
+        updateTask.put("description", "Zmienna");
+
+        final var response = UpdateTaskRequest.updateTask(updateTask, taskId);
+        Assertions.assertThat(response.statusCode()).isEqualTo(200);
+
+        JsonPath jsonData = response.jsonPath();
+        Assertions.assertThat(jsonData.getString("name")).isEqualTo("Zmienna");
+        Assertions.assertThat(jsonData.getString("description")).isEqualTo("Zmienna");
+
+    }
+
+    private void closeTaskStep() {
+        JSONObject closeTask = new JSONObject();
+        closeTask.put("status", "complete");
+
+        final var response = UpdateTaskRequest.updateTask(closeTask, taskId);
+        Assertions.assertThat(response.statusCode()).isEqualTo(200);
+
+        JsonPath jsonData = response.jsonPath();
+        Assertions.assertThat(jsonData.getString("status.status")).isEqualTo("complete");
+
+    }
+
+    private void deleteSpaceStep() {
+        final var response = DeleteSpaceRequest.deleteSpace(spaceId);
+        Assertions.assertThat(response.statusCode()).isEqualTo(200);
     }
 
 }

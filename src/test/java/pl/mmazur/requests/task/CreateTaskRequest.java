@@ -24,7 +24,7 @@ public class CreateTaskRequest {
 
     }
 
-    public static CreateTaskResponseDto createTask(CreateTaskRequestDto taskDto, String listId) {
+    public static CreateTaskResponseDto createTask(CreateTaskRequestDto taskDto, String listId) { //druga metoda, która przyjmuje DTO
         return given()
                 .spec(BaseRequest.requestSpecWithLogs())
                 .body(taskDto) //dla DTO nie trzeba robić toString
