@@ -49,7 +49,6 @@ class UpdateTaskE2ETest {
         Assertions.assertThat(response.statusCode()).isEqualTo(200);
         JsonPath jsonData = response.jsonPath();
         Assertions.assertThat(jsonData.getString("name")).isEqualTo(spaceName);
-        //Assertions.assertThat(response.jsonPath().getString("name")).isEqualTo(spaceName); --> krótsza wersja z rzutowaniem responsa na jsonPath
 
         return jsonData.getString("id");
     }
@@ -68,23 +67,13 @@ class UpdateTaskE2ETest {
     }
 
     private String createTaskStep() {
-//        JSONObject task = new JSONObject(); --> STARA WERSJA Z JSONEM
-//        task.put("name", taskName);
-//        task.put("description", "Jak to działa?");
-//        task.put("status", "to do");
-//        task.put("priority", JSONObject.NULL);
-//        task.put("parent", JSONObject.NULL);
-//        task.put("time_estimate", JSONObject.NULL);
-//        task.put("assignees", JSONObject.NULL);
-//        task.put("archived", false);
 
-        CreateTaskRequestDto taskDto = new CreateTaskRequestDto(); // --> NOWA WERSJA Z DTO (Data Transfer Object)
+        CreateTaskRequestDto taskDto = new CreateTaskRequestDto();
         taskDto.setName(taskName);
         taskDto.setDescription("Jak to działa?");
         taskDto.setStatus("to do");
 
-        final var response = CreateTaskRequest.createTask(taskDto, listId); //przekazanie dto do requesta i zamiana dto na jsona w requestcie to serializacja
-//        LOGGER.info("Create task Response: {}", response);
+        final var response = CreateTaskRequest.createTask(taskDto, listId);
 
         Assertions.assertThat(response.getName()).isEqualTo(taskName);
         Assertions.assertThat(response.getDescription()).isEqualTo("Jak to działa?");

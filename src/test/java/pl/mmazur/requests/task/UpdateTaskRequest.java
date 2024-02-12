@@ -2,9 +2,6 @@ package pl.mmazur.requests.task;
 
 import io.restassured.response.Response;
 import org.json.JSONObject;
-import pl.mmazur.dto.request.CreateTaskRequestDto;
-import pl.mmazur.dto.request.UpdateTaskRequestDto;
-import pl.mmazur.dto.response.CreateTaskResponseDto;
 import pl.mmazur.requests.BaseRequest;
 import pl.mmazur.url.ClickUpUrl;
 

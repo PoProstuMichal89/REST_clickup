@@ -2,7 +2,6 @@ package pl.mmazur.requests.list;
 
 import io.restassured.response.Response;
 import org.json.JSONObject;
-import pl.mmazur.properites.ClickUpProperites;
 import pl.mmazur.requests.BaseRequest;
 import pl.mmazur.url.ClickUpUrl;
 
